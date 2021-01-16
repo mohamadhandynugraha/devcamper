@@ -30,5 +30,5 @@ exports.updateBootcamp = (req, res, next) => {
 // @routes DELETE /api/v1/bootcamps/:id
 // @access private
 exports.deleteBootcamp = (req, res, next) => {
-  res.status(201).json({ message: `success delete ${req.params.id} bootcamp`, data: [], isSuccess: true })
+  res.status(200).json({ message: `success delete ${req.params.id} bootcamp`, data: [], isSuccess: true })
 }
