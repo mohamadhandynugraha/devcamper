@@ -28,6 +28,7 @@ if (process.env.NODE_ENV === 'development') app.use(morgan('dev'))
 app.use('/api/v1/bootcamps', bootcamps)
 
 // error handler for bootcamps, after app.use('/api/v1/bootcamps', bootcamps)
+// middleware adalah sebuah function yang punya akses request response cycle dan berjalan pada cycle tersebut.
 app.use(errorHanlder)
 
 const PORT = process.env.PORT || 5000
