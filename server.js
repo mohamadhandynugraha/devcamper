@@ -1,9 +1,11 @@
 const express = require('express');
+const path = require('path');
 const dotenv = require('dotenv');
 const morgan = require('morgan')
 const connectDB = require('./config/db')
 const errorHanlder = require('./middleware/error')
 const colors = require('colors');
+const fileupload = require('express-fileupload');
 
 // load env variables
 dotenv.config({
@@ -24,6 +26,12 @@ app.use(express.json())
 
 // dev logging middleware
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'))
+
+// file upload
+app.use(fileupload())
+
+// set static folder (untuk frontend juga)
+app.use(express.static(path.join(__dirname, 'public')))
 
 // Mount routers
 app.use('/api/v1/bootcamps', bootcamps)
