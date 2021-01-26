@@ -16,6 +16,9 @@ exports.register = asyncHandler(async(req, res, next) => {
     role
   })
 
-  res.status(200).json({ success: true })
+  // create token, user huruf kecil karena methods
+  const token = user.getSignedJwtToken()
+
+  res.status(200).json({ success: true, token })
 
 })
