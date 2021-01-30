@@ -16,10 +16,7 @@ exports.register = asyncHandler(async(req, res, next) => {
     role
   })
 
-  // create token, user huruf kecil karena methods
-  const token = user.getSignedJwtToken()
-
-  res.status(200).json({ success: true, token })
+  sendTokenResponse(user, 200, res)
 
 })
 
@@ -49,8 +46,26 @@ exports.login = asyncHandler(async(req, res, next) => {
   }
 
   // create token, user huruf kecil karena methods
-  const token = user.getSignedJwtToken()
-
-  res.status(200).json({ success: true, token })
+  sendTokenResponse(user, 200, res)
 
 })
+
+// get token from model, create cookie and send response
+const sendTokenResponse = (user, statusCode, res) => {
+  // create token, user huruf kecil karena methods
+  const token = user.getSignedJwtToken()
+  const options = {
+    // set expire dari tanggal sekarang di tambah 30 hari.
+    expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000),
+    httpOnly: true
+  }
+
+  if (process.env.NODE_ENV === 'production') {
+    options.secure = true
+  }
+
+  res.status(statusCode).cookie('token', token, options).json({
+    success: true,
+    token
+  })
+}
